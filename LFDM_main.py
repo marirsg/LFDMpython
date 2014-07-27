@@ -132,6 +132,7 @@ postsNltkText = nltk.Text(allPostTokens);
 print postsNltkText.concordance('triathlon');
 
 #debugPrinter.addMessageToDebugOutput(" ".join(allPostTokens));
+print "testing branch"
 
 
 
