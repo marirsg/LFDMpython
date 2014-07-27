@@ -89,16 +89,18 @@ while moreToGo:
         # add test for ascii characters only
         openFileHandle = urlopen(nextUrlLink);                
         lutron_soup = Bsoup(openFileHandle.read());
-        #allPostTokens.append(lutron_soup.getTokenizedTextOfPosts());
+        
         # create a new instance of a class to handle the processing of the soup                                    
     except Exception as expt:
         print "the \"try\" failed";
     finally:
         openFileHandle.close();
     
-    bSoupProcessor = LFDM_bsoupProcessor.LutronSoupProcessor(lutron_soup,debugPrinter.addMessageToDebugOutput);
-    filteredHrefList = SupportFunctions.filteringHrefLists(bSoupProcessor.getAllHyperlinks());    
-    fullHrefList = SupportFunctions.returnListWithLeadingStringInEachEntry(filteredHrefList,baseSearchUrl);
+    if lutron_soup != "":
+        bSoupProcessor = LFDM_bsoupProcessor.LutronSoupProcessor(lutron_soup,debugPrinter.addMessageToDebugOutput);
+        allPostTokens.extend(bSoupProcessor.getTokenizedTextOfPosts());
+        filteredHrefList = SupportFunctions.filteringHrefLists(bSoupProcessor.getAllHyperlinks());    
+        fullHrefList = SupportFunctions.returnListWithLeadingStringInEachEntry(filteredHrefList,baseSearchUrl);
     
     urlLinksVisited.append(nextUrlLink);
     unvisitedHrefList = [x for x in fullHrefList if x not in urlLinksVisited];
@@ -127,9 +129,9 @@ while moreToGo:
 ''' Great we have all the tokens, now make the nltk text
 '''
 postsNltkText = nltk.Text(allPostTokens);
-print postsNltkText.concordance('hvac');
+print postsNltkText.concordance('triathlon');
 
-debugPrinter.addMessageToDebugOutput(postsNltkText.tokens.__str__());
+#debugPrinter.addMessageToDebugOutput(" ".join(allPostTokens));
 
 
 

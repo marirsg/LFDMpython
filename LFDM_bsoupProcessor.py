@@ -60,13 +60,9 @@ class LutronSoupProcessor:
         for singlePost in allPosts:
             postText = singlePost.get_text();
             tokenizedText = word_tokenize(postText);
-            self.allPostTokens.append(tokenizedText);
-            
-        print self.allPostTokens;
-        
-       
-        
-        
+            self.allPostTokens.extend(tokenizedText);
+            self.allPostTokens.append("\n");            
+         
 #=============================================================================    
     def getAllHyperlinks(self):
         '''All the hyperlinks in the HTML file will be returned '''
