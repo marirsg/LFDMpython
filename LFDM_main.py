@@ -54,7 +54,7 @@ print keywordTokens;
 
 print "if the website that is being data mined has a robot.txt spec with delay between page requests, then enter value"
 print "else just hit enter and the default value is 3 seconds between page requests"
-interRequestDelay = 3;
+interRequestDelay = 1;
 
 '''
 WHAT IS THIS FOR ? CHANGING INTER REQUEST DELAY? could be useful
@@ -128,10 +128,16 @@ while moreToGo:
 
 ''' Great we have all the tokens, now make the nltk text
 '''
-postsNltkText = nltk.Text(allPostTokens);
-print postsNltkText.concordance('triathlon');
 
-#debugPrinter.addMessageToDebugOutput(" ".join(allPostTokens));
+asciiPostTokens = [];
+for postToken in allPostTokens:
+    postToken = postToken.encode('ascii','ignore');
+    asciiPostTokens.append(postToken);
+
+postsNltkText = nltk.Text(asciiPostTokens);
+print postsNltkText.concordance('pendant');
+
+debugPrinter.addMessageToDebugOutput(" ".join(asciiPostTokens));
 print "testing branch"
 
 
